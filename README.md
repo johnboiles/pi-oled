@@ -6,7 +6,7 @@ This repository contains the code and instructions for setting up an OLED displa
 
 ## Prerequisites
 
-* Raspberry Pi (tested on Raspberry Pi 4 Model B)
+* Raspberry Pi (tested on Raspberry Pi 3)
 * SSD1331 OLED display
 * Python 3.9 or higher
 * SPI interface enabled on Raspberry Pi
