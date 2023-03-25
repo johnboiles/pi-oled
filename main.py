@@ -37,12 +37,12 @@ def get_cpu_load() -> str:
 
 def get_mem_usage() -> str:
     mem = psutil.virtual_memory()
-    return f"Mem: {mem.used // (1024*1024)}/{mem.total // (1024*1024)} MB {mem.percent:.2f}%"
+    return f"RAM: {mem.used // (1024*1024)}/{mem.total // (1024*1024)}MB"
 
 
 def get_disk_usage() -> str:
     disk = psutil.disk_usage('/')
-    return f"Disk: {disk.used // (1024*1024*1024)}/{disk.total // (1024*1024*1024)} GB {disk.percent}%"
+    return f"DISK: {disk.used // (1024*1024*1024)}/{disk.total // (1024*1024*1024)}GB"
 
 
 def get_cpu_temp() -> str:
