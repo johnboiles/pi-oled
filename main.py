@@ -76,4 +76,4 @@ while True:
         y += bbox[3] + 2
 
     disp.image(image)
-    time.sleep(1)
+    time.sleep(5)
