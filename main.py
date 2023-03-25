@@ -5,29 +5,7 @@ import digitalio
 import board
 from PIL import Image, ImageDraw, ImageFont
 import adafruit_rgb_display.ssd1331 as ssd1331
-
-
-import builtins
-import inspect
-import sys
-
-original_print = builtins.print
-
-# Define a custom print function
-def custom_print(*args, **kwargs):
-    # Get the caller's frame
-    frame = inspect.currentframe().f_back
-
-    # Get the source file name and line number of the print call
-    source_file = frame.f_code.co_filename
-    line_number = frame.f_lineno
-
-    # Add the source file and line number to the output
-    prefix = f"[{source_file}:{line_number}]"
-    original_print(prefix, *args, **kwargs)
-
-# Override the built-in print function
-builtins.print = custom_print
+import psutil
 
 
 def init_display() -> Tuple[int, int, ssd1331.SSD1331]:
@@ -54,23 +32,23 @@ def get_ip() -> str:
 
 
 def get_cpu_load() -> str:
-    cmd = "top -bn1 | grep load | awk '{printf \"%.2f\", $(NF-2)}'"
-    return f"CPU Load: {subprocess.check_output(cmd, shell=True).decode('utf-8').strip()}"
+    return f"CPU Load: {psutil.cpu_percent():.2f}%"
 
 
 def get_mem_usage() -> str:
-    cmd = "free -m | awk 'NR==2{printf \"%s/%s MB  %.2f%%\", $3,$2,$3*100/$2 }'"
-    return f"Mem: {subprocess.check_output(cmd, shell=True).decode('utf-8').strip()}"
+    mem = psutil.virtual_memory()
+    return f"Mem: {mem.used // (1024*1024)}/{mem.total // (1024*1024)} MB {mem.percent:.2f}%"
 
 
 def get_disk_usage() -> str:
-    cmd = "df -h | awk '$NF==\"/\"{printf \"%d/%d GB  %s\", $3,$2,$5}'"
-    return f"Disk: {subprocess.check_output(cmd, shell=True).decode('utf-8').strip()}"
+    disk = psutil.disk_usage('/')
+    return f"Disk: {disk.used // (1024*1024*1024)}/{disk.total // (1024*1024*1024)} GB {disk.percent}%"
 
 
 def get_cpu_temp() -> str:
-    cmd = "cat /sys/class/thermal/thermal_zone0/temp |  awk '{printf \"%.1f C\", $(NF-0) / 1000}'"
-    return f"CPU Temp: {subprocess.check_output(cmd, shell=True).decode('utf-8').strip()}"
+    with open('/sys/class/thermal/thermal_zone0/temp', 'r') as temp_file:
+        cpu_temp = float(temp_file.read()) / 1000
+    return f"CPU Temp: {cpu_temp:.1f} C"
 
 
 width, height, disp = init_display()
