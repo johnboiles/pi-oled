@@ -1,5 +1,7 @@
 # Pi-OLED Display
 
+![IMG_0041](https://user-images.githubusercontent.com/218876/227703075-8b00399f-497e-4344-afce-029e1e7bdb54.jpeg)
+
 This repository contains the code and instructions for setting up an OLED display on a Raspberry Pi using Python and a virtual environment. The OLED display is a 0.96 inch, 128x64 pixel SSD1331 display connected via SPI. The display shows system information, including date, time, CPU usage, and temperature.
 
 ## Prerequisites
