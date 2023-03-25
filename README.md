@@ -31,7 +31,7 @@ RST  -> GPIO25
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/pi-oled.git
+git clone https://github.com/johnboiles/pi-oled.git
 cd pi-oled
 ```
 
